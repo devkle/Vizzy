@@ -9,7 +9,7 @@
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
         <script src="scripts/visualizer.js"></script>
     </head>
-    <body style = "background: black">
+    <body style="background: black">
         <div style="background-color: black; margin: 0; padding: 0" id="top-bar" class="ui secondary menu">
             <div id="right-menu" class="right menu">
                 <div id="filename-container">
@@ -24,7 +24,7 @@
                 <input id="file-input" type="file" accept="audio/*,video/*">
                 <div class="item">
                     <select id="fft-input" class="ui dropdown">
-                        <optgroup label = "FFT (Fast Fourier Transform)">
+                        <optgroup label="FFT (Fast Fourier Transform)">
                             <option value="32">32</option>
                             <option value="64">64</option>
                             <option value="128">128</option>
@@ -36,6 +36,12 @@
                             <option value="8192">8192</option>
                             <option value="16384">16384</option> 
                             <option value="32768">32768</option>
+                        </optgroup>
+                    </select>
+                    <select id="graph-input" class="ui dropdown">
+                        <optgroup label="Graph">
+                            <option value="Bar">Bar</option>
+                            <option value="Wave/Oscillation">Wave/Oscillation</option>
                         </optgroup>
                     </select>
                 </div>

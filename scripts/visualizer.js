@@ -39,6 +39,7 @@ window.onload = function() {
         const WIDTH = canvas.width;
         const HEIGHT = canvas.height;
         const FFT = document.getElementById("fft-input").options[document.getElementById("fft-input").selectedIndex].value;
+        const GRAPH = document.getElementById("graph-input").options[document.getElementById("graph-input").selectedIndex].value;
 
         let ctx = canvas.getContext("2d");
         let files = this.files; 
@@ -59,59 +60,88 @@ window.onload = function() {
         setFastFourierTransformSize(analyser, FFT);
         let bufferLength = analyser.frequencyBinCount;
         let dataArray = new Uint8Array(bufferLength); 
-    
-        let barWidth = (WIDTH / bufferLength) * 13;
-        let barHeight;
-        let x = 0;
+        let x;
     
         function draw() {
-            let drawVisual = requestAnimationFrame(draw);
-            x = 0;
-            analyser.getByteFrequencyData(dataArray); 
-
             fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
 
-            let r, g, b;
-            let bars = 118; 
+            let drawVisual = requestAnimationFrame(draw);
+            x = 0;
+
+            analyser.getByteTimeDomainData(dataArray);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = 'rgb(255, 255, 255)';
+            ctx.beginPath();
+            let sliceWidth = WIDTH * 1.0 / bufferLength;
+
+            for(let i = 0; i < bufferLength; i++) {
+                let v = dataArray[i] / 128.0;
+                let y = v * HEIGHT/2;
         
-            for (let i = 0; i < bars; i++) {
-                barHeight = (dataArray[i] * 2.5);
-        
-                // color ranges for bars
-                if(dataArray[i] > 200) { 
-                    r = 255
-                    g = 255
-                    b = 0
-                } else if(dataArray[i] > 160) { 
-                    r = 255
-                    g = 254
-                    b = 159
-                } else if(dataArray[i] > 120) {
-                    r = 253
-                    g = 156
-                    b = 253
-                } else if(dataArray[i] > 80) { 
-                    r = 204
-                    g = 205
-                    b = 253
-                } else if(dataArray[i] > 40) { 
-                    r = 157
-                    g = 255
-                    b = 254
-                } else { 
-                    r = 255
-                    g = 255
-                    b = 255
+                if(i === 0) {
+                  ctx.moveTo(x, y);
+                } else {
+                  ctx.lineTo(x, y);
                 }
-        
-                ctx.fillStyle = `rgb(${r},${g},${b})`;
-                ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight);
-    
-                x += barWidth + 10 
+                x += sliceWidth;
             }
+            ctx.lineTo(canvas.width, canvas.height/2);
+            ctx.stroke();
         }
+
+        // function draw() {
+        //    let barWidth = (WIDTH / bufferLength) * 13;
+        //    let barHeight;
+        //     fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
+
+        //     let drawVisual = requestAnimationFrame(draw);
+        //     x = 0;
+        //     analyser.getByteFrequencyData(dataArray); 
+
+        //     let r, g, b;
+        //     let bars = 118; 
+        
+        //     for (let i = 0; i < bars; i++) {
+        //         barHeight = (dataArray[i] * 2.5);
+        
+        //         // color ranges for bars
+        //         if(dataArray[i] > 200) { 
+        //             r = 255
+        //             g = 255
+        //             b = 0
+        //         } else if(dataArray[i] > 160) { 
+        //             r = 255
+        //             g = 254
+        //             b = 159
+        //         } else if(dataArray[i] > 120) {
+        //             r = 253
+        //             g = 156
+        //             b = 253
+        //         } else if(dataArray[i] > 80) { 
+        //             r = 204
+        //             g = 205
+        //             b = 253
+        //         } else if(dataArray[i] > 40) { 
+        //             r = 157
+        //             g = 255
+        //             b = 254
+        //         } else { 
+        //             r = 255
+        //             g = 255
+        //             b = 255
+        //         }
+        
+        //         ctx.fillStyle = `rgb(${r},${g},${b})`;
+        //         ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight);
+    
+        //         x += barWidth + 10 
+        //     }
+        // }
         audio.play();
-        draw();
+        if(!audio.paused) {
+            draw();
+        }
       };
 };
     

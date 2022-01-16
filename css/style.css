@@ -19,6 +19,7 @@ html {
 #filename-container {
     margin: auto;
     width: 50%;
+    margin-left: 30px;
 }
 
 #filename {
@@ -46,6 +47,10 @@ html {
 #label-file-input {
     height: 38px;
     text-align: center;
+}
+
+#graph-input {
+    margin-left: 20px;
 }
 
 #fft-input {

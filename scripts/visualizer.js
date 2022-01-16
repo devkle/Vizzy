@@ -61,19 +61,18 @@ window.onload = function() {
         let bufferLength = analyser.frequencyBinCount;
         let dataArray = new Uint8Array(bufferLength); 
         let x;
-    
-        function draw() {
+
+        function drawWave() {
             fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
-
-            let drawVisual = requestAnimationFrame(draw);
-            x = 0;
-
+            let drawVisual = requestAnimationFrame(drawWave);
             analyser.getByteTimeDomainData(dataArray);
 
             ctx.lineWidth = 2;
             ctx.strokeStyle = 'rgb(255, 255, 255)';
             ctx.beginPath();
+
             let sliceWidth = WIDTH * 1.0 / bufferLength;
+            x = 0;
 
             for(let i = 0; i < bufferLength; i++) {
                 let v = dataArray[i] / 128.0;
@@ -88,59 +87,59 @@ window.onload = function() {
             }
             ctx.lineTo(canvas.width, canvas.height/2);
             ctx.stroke();
+        };
+
+        function drawBar() {
+            fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
+            let barWidth = (WIDTH / bufferLength) * 13;
+            let barHeight;
+            let drawVisual = requestAnimationFrame(drawBar);
+            x = 0;
+            analyser.getByteFrequencyData(dataArray); 
+
+            let r, g, b;
+            let bars = 118; 
+        
+            for (let i = 0; i < bars; i++) {
+                barHeight = (dataArray[i] * 2.5);
+                if(dataArray[i] > 200) { 
+                    r = 255
+                    g = 255
+                    b = 0
+                } else if(dataArray[i] > 160) { 
+                    r = 255
+                    g = 254
+                    b = 159
+                } else if(dataArray[i] > 120) {
+                    r = 253
+                    g = 156
+                    b = 253
+                } else if(dataArray[i] > 80) { 
+                    r = 204
+                    g = 205
+                    b = 253
+                } else if(dataArray[i] > 40) { 
+                    r = 157
+                    g = 255
+                    b = 254
+                } else { 
+                    r = 255
+                    g = 255
+                    b = 255
+                }
+        
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+                ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight);
+    
+                x += barWidth + 10 
+            }
         }
 
-        // function draw() {
-        //    let barWidth = (WIDTH / bufferLength) * 13;
-        //    let barHeight;
-        //     fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
-
-        //     let drawVisual = requestAnimationFrame(draw);
-        //     x = 0;
-        //     analyser.getByteFrequencyData(dataArray); 
-
-        //     let r, g, b;
-        //     let bars = 118; 
-        
-        //     for (let i = 0; i < bars; i++) {
-        //         barHeight = (dataArray[i] * 2.5);
-        
-        //         // color ranges for bars
-        //         if(dataArray[i] > 200) { 
-        //             r = 255
-        //             g = 255
-        //             b = 0
-        //         } else if(dataArray[i] > 160) { 
-        //             r = 255
-        //             g = 254
-        //             b = 159
-        //         } else if(dataArray[i] > 120) {
-        //             r = 253
-        //             g = 156
-        //             b = 253
-        //         } else if(dataArray[i] > 80) { 
-        //             r = 204
-        //             g = 205
-        //             b = 253
-        //         } else if(dataArray[i] > 40) { 
-        //             r = 157
-        //             g = 255
-        //             b = 254
-        //         } else { 
-        //             r = 255
-        //             g = 255
-        //             b = 255
-        //         }
-        
-        //         ctx.fillStyle = `rgb(${r},${g},${b})`;
-        //         ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight);
-    
-        //         x += barWidth + 10 
-        //     }
-        // }
         audio.play();
-        if(!audio.paused) {
-            draw();
+        if(GRAPH == "Wave/Oscillation") {
+            drawWave();
+        } else {
+            drawBar();
         }
       };
 };

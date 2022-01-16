@@ -1,0 +1,14 @@
+
+#ui-container {
+    margin-top: 50px;
+    width: 50%;
+}
+
+#file-input {
+    display: none;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}

@@ -1,5 +1,5 @@
 function fillCanvas(ctx, width, height) {
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillStyle = "rgba(0,0,0,0.15)";
     ctx.fillRect(0, 0, width, height);
 }
 
@@ -36,7 +36,7 @@ window.onload = function() {
 
     const file = document.getElementById("file-input");
     const canvas = document.getElementById("canvas");
-    const filename = document.getElementById("filename");
+    // const filename = document.getElementById("filename");
     const audio = document.getElementById("audio");
 
     file.onchange = function() {
@@ -51,7 +51,7 @@ window.onload = function() {
         audio.src = URL.createObjectURL(files[0]); 
     
         let name = files[0].name
-        filename.innerText = `${name}` 
+        // filename.innerText = `${name}` 
     
         let context = createAudioContext();
         let src = createAudioSource(context, audio);
@@ -84,26 +84,30 @@ window.onload = function() {
                 barHeight = (dataArray[i] * 2.5);
         
                 // color ranges for bars
-                if (dataArray[i] > 210){ 
-                    r = 250
-                    g = 0
-                    b = 255
-                } else if (dataArray[i] > 200){ 
-                    r = 250
-                    g = 255
-                    b = 0
-                } else if (dataArray[i] > 190){ 
+                if(dataArray[i] > 210) { 
+                    r = 253
+                    g = 156
+                    b = 253
+                } else if(dataArray[i] > 200) { 
                     r = 204
+                    g = 205
+                    b = 253
+                } else if(dataArray[i] > 190) {
+                    r = 255
                     g = 255
                     b = 0
-                } else if (dataArray[i] > 180){ 
-                    r = 152
+                } else if(dataArray[i] > 180) { 
+                    r = 255
+                    g = 254
+                    b = 159
+                } else if(dataArray[i] > 170) { 
+                    r = 157
                     g = 255
-                    b = 152
+                    b = 254
                 } else { 
-                    r = 135
-                    g = 206
-                    b = 250
+                    r = 255
+                    g = 255
+                    b = 255
                 }
         
                 ctx.fillStyle = `rgb(${r},${g},${b})`;

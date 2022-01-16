@@ -10,16 +10,17 @@
         <script src="scripts/visualizer.js"></script>
     </head>
     <body>
-        <div id="ui-container" class="ui center aligned container">
-            <h1 class="ui header">Visualizer</h1>
-            <form class="ui form">
+        <div id="top-bar" class="ui secondary menu">
+            <div id="right-menu" class="right menu">
                 <div class="field">
-                    <label for="file-input" class="ui icon button">
-                        <i class="file icon"></i>
+                    <label for="file-input" id="label-file-input" class="ui icon button">
+                        <i id="upload-text" class="file icon"></i>
                         Upload File
                     </label>
+                </div>
+                <input id="file-input" type="file" accept="audio/*,video/*">
+                <div class="item">
                     <select id="fft-input" class="ui dropdown">
-                        <option value="fft">FFT (Fast Fourier Transform)</option>
                         <option value="32">32</option>
                         <option value="64">64</option>
                         <option value="128">128</option>
@@ -29,13 +30,19 @@
                         <option value="2048">2048</option>
                         <option value="4096">4096</option>
                         <option value="8192">8192</option>
-                        <option value="16384">16384</option>
+                        <option value="16384">16384</option> 
                         <option value="32768">32768</option>
                     </select>
-                    <input id="file-input" type="file" accept="audio/*,video/*">
+                </div>
+            </div>
+        </div>
+        <div id="ui-container" class="ui center aligned container">
+            <form class="ui form">
+                <div class="field">
                     <canvas id="canvas"></canvas>
-                    <audio id="audio" controls></audio>
-                    <h3 id="filename"></h3>
+                    <div id="audio-container"> 
+                        <audio id="audio" controls></audio>
+                    </div>
                 </div>
             </form>
         </div>

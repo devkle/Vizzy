@@ -1,5 +1,5 @@
 function fillCanvas(ctx, width, height) {
-    ctx.fillStyle = "rgba(0,0,0,0.15)";
+    ctx.fillStyle = "rgba(0,0,0,0.8)";
     ctx.fillRect(0, 0, width, height);
 }
 
@@ -24,19 +24,13 @@ function createAudioSource(context, audioSource) {
 }
 
 function setFastFourierTransformSize(analyser, fftSize) {
-    console.log(fftSize);
-    if(fftSize == "fft") {
-        fftSize = 2048;
-    }
-    console.log(fftSize);
     analyser.fftSize = fftSize;
 }
 
 window.onload = function() {
-
     const file = document.getElementById("file-input");
     const canvas = document.getElementById("canvas");
-    // const filename = document.getElementById("filename");
+    const filename = document.getElementById("filename");
     const audio = document.getElementById("audio");
 
     file.onchange = function() {
@@ -51,7 +45,7 @@ window.onload = function() {
         audio.src = URL.createObjectURL(files[0]); 
     
         let name = files[0].name
-        // filename.innerText = `${name}` 
+        filename.innerText = `${name}` 
     
         let context = createAudioContext();
         let src = createAudioSource(context, audio);
@@ -78,29 +72,29 @@ window.onload = function() {
             fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
 
             let r, g, b;
-            let bars = 200; 
+            let bars = 118; 
         
             for (let i = 0; i < bars; i++) {
                 barHeight = (dataArray[i] * 2.5);
         
                 // color ranges for bars
-                if(dataArray[i] > 210) { 
-                    r = 253
-                    g = 156
-                    b = 253
-                } else if(dataArray[i] > 200) { 
-                    r = 204
-                    g = 205
-                    b = 253
-                } else if(dataArray[i] > 190) {
+                if(dataArray[i] > 200) { 
                     r = 255
                     g = 255
                     b = 0
-                } else if(dataArray[i] > 180) { 
+                } else if(dataArray[i] > 160) { 
                     r = 255
                     g = 254
                     b = 159
-                } else if(dataArray[i] > 170) { 
+                } else if(dataArray[i] > 120) {
+                    r = 253
+                    g = 156
+                    b = 253
+                } else if(dataArray[i] > 80) { 
+                    r = 204
+                    g = 205
+                    b = 253
+                } else if(dataArray[i] > 40) { 
                     r = 157
                     g = 255
                     b = 254

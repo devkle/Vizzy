@@ -1,17 +1,28 @@
 html { 
     height: 100%;
-}
-
-body {
-    min-height: 100%;
+    background: black;
 }
 
 #top-bar {
     height: 50px;
+    margin-right: 0;
+}
+
+.ul.menu {
+    margin: 0;
 }
 
 .item {
     padding: none;
+}
+
+#filename-container {
+    margin: auto;
+    width: 50%;
+}
+
+#filename {
+    color: #ffffff;
 }
 
 .field {
@@ -19,7 +30,7 @@ body {
 }
 
 #ui-container {
-    margin-top: 10px;
+    background: black;
     width: 100%;
 }
 
@@ -49,8 +60,10 @@ body {
 
 #canvas {
     position: relative;
+    background: black;
     width: 100%;
-    height: 450px;
+    height: 463px;
+    z-index: 10;
 }
 
 

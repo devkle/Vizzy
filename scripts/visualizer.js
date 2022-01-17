@@ -91,7 +91,7 @@ window.onload = function() {
 
         function drawBar() {
             fillCanvas(ctx, WIDTH, HEIGHT); // sets color for canvas
-            let barWidth = (WIDTH / bufferLength) * 13;
+            let barWidth = (WIDTH / bufferLength) * 2.5;
             let barHeight;
             let drawVisual = requestAnimationFrame(drawBar);
             x = 0;
@@ -101,7 +101,7 @@ window.onload = function() {
             let bars = 118; 
         
             for (let i = 0; i < bars; i++) {
-                barHeight = (dataArray[i] * 2.5);
+                barHeight = dataArray[i]*2.5;
                 if(dataArray[i] > 200) { 
                     r = 255
                     g = 255
@@ -131,7 +131,7 @@ window.onload = function() {
                 ctx.fillStyle = `rgb(${r},${g},${b})`;
                 ctx.fillRect(x, (HEIGHT - barHeight), barWidth, barHeight);
     
-                x += barWidth + 10 
+                x += barWidth + 10
             }
         }
 
